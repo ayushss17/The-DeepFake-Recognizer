@@ -1,10 +1,14 @@
 body {
 	font-family: "Raleway", sans-serif;
 	font-size: 1.2em;
-  color: #707070;
+  color:#202;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  text-align: center;
+}
+html{
+  scroll-behavior: smooth;
 }
 a {
   transition: all 0.3s ease;
@@ -63,12 +67,13 @@ blockquote {
   color: white;
   background-color: #38B;
 }
+/* Navbar Strats */
 .navbar{
    
-    position: fixed;
+    position: sticky;
     width: 100%;
     z-index: 1000;
-    background-color: transparent;
+    background-color:rgba(0,0,0,0.8);
     transition: all 0.3s ease;
 
 }
@@ -89,22 +94,21 @@ blockquote {
     transition: color 0.3s;
 }
 .navbar-nav .nav-link:hover {
-    color: white
-}
+    color: white !important;
+} 
 
-
+/* Navbar ends */
 
 
 #infinite {
-	background-color: #222;
-
+    background-color: #C8D7E3;
     background-image: url(); 
     background-position: center;
     background-size: cover;
   background-repeat: no-repeat;
-  height: 100vh;
-  min-height: 375px;
+  height: 800px;
   position: relative;
+  text-align: center;
 }
 @media (min-height: 600px) and (min-width: 1920px) {
     #infinite {
@@ -152,6 +156,11 @@ blockquote {
     font-family: "Orbitron";
     font-size: 3rem;
     text-shadow: 2px 2px 2px #333;
+    text-align: center;
+    margin-top: 500px;
+  }
+  #dynamic-text{
+    text-align: center;
   }
   
  
@@ -252,16 +261,53 @@ blockquote {
     max-width: 100%;
     opacity: 0.8;
   }
-  
-  
-  #about   {
-    color: white;
-    background-color: #222;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-size: 100%;
-    position: relative;
+
+  .cards{
+    margin-top: 300px;
   }
+  
+  /* About Start */
+  #about {
+    padding: 80px 10%;
+    text-align: center;
+    background-color: white;
+    height: 1200px;
+}
+
+#about h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#about p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 0 auto;
+    color: #555;
+}
+.abtTxt{
+  margin-left: 40px;
+}
+.container{
+  justify-content: center;
+  display: flex;
+  color: black;
+}
+/* #img-fluid {
+  
+} */
+.imgAbt{
+  display: block;
+  margin: 30px auto;
+  max-width: 80%;
+  border-radius: 10px;
+  display: flex;
+  height: 300px;
+}
+
+
   @media (max-width: 991px) {
     #about {
       background-image: url(../img/infinite-loop-02-mobile.jpg);
@@ -390,3 +436,82 @@ blockquote {
         margin: 0;
       }
     }
+/* footer Strats */
+footer {
+  background-color: #222;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+/* footer ends */
+
+/* cards */
+
+/* Center the cards and ensure equal height */
+.packages {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Card Styling */
+.card {
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Card Image */
+.card-img-top {
+  height: 200px;  /* Adjust image height */
+  object-fit: cover; /* Ensures image fits nicely */
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+/* Card Body */
+.card-body {
+  text-align: center;
+  padding: 20px;
+}
+
+/* Card Title */
+.card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2C3E50;
+}
+
+/* Card Text */
+.card-text {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+/* Button Styling */
+.card-body .btn {
+  background-color: #007bff;
+  color: white;
+  border-radius: 25px;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease;
+}
+
+.card-body .btn:hover {
+  background-color: #0056b3;
+}
+
+.packages {
+  margin-top: 250px; /* Adjust spacing as needed */
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
