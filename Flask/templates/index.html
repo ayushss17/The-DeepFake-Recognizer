@@ -3,117 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>DeepScanner</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
 </head>
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-    <!--Navbar-->
-    <section id="infinite" class="text-white tm-font-big tm-parallax">
-    <nav id="navbar" class="navbar navbar-expand-md navbar-header">
+    <nav class="navbar navbar-expand-md navbar-header fixed-top">
         <div class="container">
             <a href="#infinite" class="navbar-brand">DeepScanner</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                <i class="fas fa-bars navbar-toggler-icon"></i>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="./scanner">Scanner</a></li>
+                    <li class="nav-item"><a href="/image" class="nav-link">Scanner</a></li>
+                    
+                    <li class="nav-item"><a href="#about" class="nav-link">About us</a></li>
                 </ul>
             </div>
         </div>
     </nav>
-     
 
-    <div class="container mt-5">
-            <!-- Text Section (col-6) -->
-            <div class="col-md-6 text-center " id="rtext" style="margin-top: 150px;">
-                <h2 class="tm-hero-title mt-4" >Deepfakes can cause <span id="dynamic-text"></span></h2>
-            </div>
+
+    <section id="infinite">
+        <div class="img-container">
+            <img src="../static/Images/deepfake.jpg" alt="Deepfake Background">
         </div>
-    </div>
-    
-</section>  
-
-    <!-- About Us Section -->
-     <section name="about" id="about">
-    <div class="container-fluid About" id="about">
-        <div class="container mt-5">
-            <div class="row">
-                <h2 class="abouth2 mb-4">ABOUT US</h2>
-
-                <div class="col-sm-6">
-                <img src="../static/Images/images.jpg" alt="About Us Image" class="img-fluid imgAbt">
-                </div>
-                <div class="col-sm-6">
-                    <h3 style="margin-top: 60px;">Welcome to <strong>DeepScanner</strong>! We are dedicated to detecting and preventing deepfake-related cyber threats. Our mission is to safeguard individuals and organizations against misinformation and digital fraud.</h3>
-                </div> 
-
-                <div class="row packages justify-content-center">
-                    <!-- Deepfake Image Detection Card -->
-                    <div class="col-sm-6 col-md-5 mb-3">      
-                      <div class="card h-100 text-center">
-                        <img src="../static/Images/img.png" class="card-img-top" alt="Deepfake Image">
-                        <div class="card-body">
-                          <h5 class="card-title">Deepfake Image Detection</h5>
-                          <p class="card-text">Our AI system analyzes images to detect manipulations and deepfake alterations, ensuring authenticity.</p>
-                          <a href="scanner.html" class="btn btn-primary">Scan Image</a>
-                        </div>
-                      </div>
-                    </div>
-                
-                    <!-- Deepfake Video Detection Card -->
-                    <div class="col-sm-6 col-md-5 mb-3">    
-                      <div class="card h-100 text-center">
-                        <img src="../static/Images/video.jpg" class="card-img-top" alt="Deepfake Video">
-                        <div class="card-body">
-                          <h5 class="card-title">Deepfake Video Detection</h5>
-                          <p class="card-text">Analyze videos to detect deepfake manipulation and protect against misinformation.</p>
-                          <a href="scanner.html" class="btn btn-primary">Scan Video</a>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-                
-               
-                </div>
-                    
-            </div>
+        <div class="text-container">
+            <h2 class="tm-hero-title">Deepfakes can cause </h2>
+            <h2 class="tm-hero-title"><span id="dynamic-text"></span></h2>
         </div>
     </section>
+</section>   
+  <!--  <section id="whatwedo" class="tm-section-pad-top">
+        <div class="container">
+            <h2 class=" mb-4" style="color:  #37A;">What is Deepfake?</h2>
+            <h3>Deepfakes are AI-generated media where a person's face, voice, or actions are altered to create highly realistic but fake content.
+
+            </h3>
+            <h3>Deepfake detection services to detect the fake videos and images made using the AI and machine learning based technology.
+
+                Actually, such images are created to make the fake video or image of the popular, celebrities and renowned personality to defame them or gain the high viewership on such videos just for fun and non-intentional actions to post on social media and other platforms.
+            </h3>
+            <div class="tm-gallery-container">
+                <div class="grid tm-gallery">
+                    <figure class="tm-gallery-item">
+                        <img src="" alt="">
+                    </figure>
+                    
+                </div>
+            </div>
+        </div>
+    </section>-->
+        <section id="about" class="tm-section-pad-top">
+        <div class="row tm-content-box">
+            <div class="col-lg-12 col-xl-12">
+                <div class="container">
+                    <h2 class=" mb-4" style="color:  #37A;">What is Deepfake?</h2>
+                    <h3>Deepfakes are AI-generated media where a person's face, voice, or actions are altered to create highly realistic but fake content.
+        
+                    </h3>
+                    <h3>Deepfake detection services to detect the fake videos and images made using the AI and machine learning based technology.
+        
+                        Actually, such images are created to make the fake video or image of the popular, celebrities and renowned personality to defame them or gain the high viewership on such videos just for fun and non-intentional actions to post on social media and other platforms.
+                    </h3>
+                    <div class="tm-gallery-container">
+                        <div class="grid tm-gallery">
+                            <figure class="tm-gallery-item">
+                                <img src="" alt="">
+                            </figure>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="tm-intro-text-container">
+                    <h2 class="tm-text-primary mb-4 tm-section-title" style="padding-left: 100px;">How Our System Works</h2>
+                    <h3 class="mb-4 tm-intro-text" style="padding-left: 100px;">
+                        Our deepfake recognition system uses advanced machine learning and AI algorithms to analyze videos and images. It detects subtle inconsistencies in facial expressions, lighting, and voice modulation to identify potential deepfakes.
+                    </h3>
+                </div>
+            </div>
+            <div class="row tm-content-box"><!-- second row -->
+                <div class="col-lg-1">
+                    
+                </div>
+                <div class="col-lg-5">
+                    <div class="tm-intro-text-container">
+                        <h2 class="tm-text-primary mb-4">AI-Powered Detection</h2>
+                        <h4 class="mb-4 tm-intro-text">
+                            Uses deep learning techniques to analyze media authenticity.
+                        </h4>
+                    </div>
+                </div>
+                
+                <div class="col-lg-1">
+                    <i class="far fa-3x fa-comment-alt text-center tm-icon"></i>
+                </div>
+                <div class="col-lg-5">
+                    <div class="tm-intro-text-container">
+                        <h2 class="tm-text-primary mb-4">Real-Time Analysis</h2>
+                        <h4 class="mb-4 tm-intro-text">
+                            Get instant results when uploading content.
+                        </h4>
+                    </div>
+                </div>
+
+            </div><!-- second row -->
+
+        </div>
+        <div class="row tm-content-box"><!-- third row -->
+            <div class="col-lg-1">
+                
+            </div>
+            <div class="col-lg-5">
+                <div class="tm-intro-text-container">
+                    <h2 class="tm-text-primary mb-4">Educational Resources</h2>
+                    <h4 class="mb-4 tm-intro-text">
+                        Learn how deepfake technology works and ways to stay protected.
+                    </h4>
+                      
+                     
+                </div>
+            </div>
+            
+            <div class="col-lg-1">
+                <i class="fas fa-3x fa-users text-center tm-icon"></i>
+            </div>
+            <div class="col-lg-5">
+                <div class="tm-intro-text-container">
+                  <h2 class="tm-text-primary mb-4">User-Friendly Interface</h2>
+                    <h4 class="mb-4 tm-intro-text">
+                        Easy-to-use platform for all users.
+                    </h4>
+                      
+                      
+                </div>
+            </div>
+
+        </div><!-- third row -->
+
     </div>
-    <!-- About Us Section End -->
+</section>
+    
 
-    <!-- Footer Start -->
-    <footer class="bg-dark text-white text-center py-3 mt-5">
-        <h3>Deepfake Detection Project</h3>
-        <p class="mb-1">Designed by <a href="#" class="text-light">Group Members</a></p>
-        <p>&copy; 2025 Group5 MINI PROJECT. All Rights Reserved.</p>
+   
+       
+    
+    
+
+    <footer class="text-center small tm-footer">
+        <p>Copyright &copy; 2025 DeepScanner | <a href="#">Group5 MINI PROJECT</a></p>
     </footer>
-    <!-- Footer End -->
 
-    <script src="js/jquery-1.9.1.min.js"></script>     
-    <script src="slick/slick.min.js"></script>
-    <script src="magnific-popup/jquery.magnific-popup.min.js"></script>
-    <script src="js/easing.min.js"></script>
-    <script src="js/jquery.singlePageNav.min.js"></script>     
-    <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script>
         var options = {
-            strings: ["Cybercrime Blackmail", "Political Manipulation", "Identity Theft", "Reputational Damage"],
-            typeSpeed: 50,
-            backSpeed: 30,
+            strings: ["Cybercrime Blackmail", "Identity Theft", "Reputational Damage", "Political Manipulation"],
+            typeSpeed: 90,
+            backSpeed: 40,
             backDelay: 1000,
             loop: true
+            
         };
         var typed = new Typed("#dynamic-text", options);
+
+
+        document.querySelectorAll('input[name="uploadType"]').forEach((radio) => {
+        radio.addEventListener('change', (e) => {
+          const fileInput = document.getElementById('fileUpload');
+          fileInput.accept = e.target.value === 'video' ? 'video/*' : 'image/*';
+        });
+      });
+
+        
     </script>
+  <script src="index.js"></script>
 </body>
+
+
 </html>
