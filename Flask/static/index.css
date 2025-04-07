@@ -1,3 +1,15 @@
+@font-face {
+  font-family: title;
+  src: url(./Fonts/kort.ttf);
+}
+@font-face {
+  font-family: abtTitle;
+  src: url(./Fonts/aileron.italic.otf);
+}
+@font-face {
+  font-family: abtText;
+  src: url(./Fonts/Montserrat/MontserratAlternates-Regular.otf);
+}
 html {
   scroll-behavior: smooth;
 }
@@ -43,6 +55,14 @@ blockquote {
   padding-top: 0%;
   padding-bottom: 40px;
 }
+.tm-section-title , .tm-text-primary{
+  font-family: abtTitle;
+  font-size: 35px;
+}
+.tm-intro-text{
+  font-family: abtText;
+  font-size: 25px;
+}
 
 .tm-content-box {
   padding-top: 20px;
@@ -72,16 +92,28 @@ blockquote {
    
     position: fixed;
     width: 100%;
-    height: 13%;
+    height: 80px;
     z-index: 1000;
     background-color: black;
     transition: all 0.3s ease;
 
 }
+.abtTitle{
+  margin-top: 150px;
+  font-family: abtTitle;
+  font-size: 35px;
+}
+.row1ABT{
+  margin-top: 100px;
+}
+.abtText{
+  font-family: abtText;
+  font-size: 25px;
+}
 .navbar-brand{
-    font-family: "Orbitron";
+    font-family: title;
     color: skyblue;
-    font-size: 1.4rem;
+    font-size: 30px;
     font-weight: bolder;
     transition: color 0.3s;
 }
@@ -89,7 +121,7 @@ blockquote {
     color: white
 }
 .navbar-nav .nav-link {
-    font-family: "Orbitron";
+    font-family: title;
     color: skyblue ;
     font-weight: bold;
     transition: color 0.3s;
@@ -115,10 +147,19 @@ blockquote {
 
  .img-container {
   flex: 0.7; 
-  display: flex;
+  /* justify-content: center;
+  align-items: center; */
+  height: 300px;
+  
+  border-top-left-radius: 300px;
+  border-top-right-radius: 300px;
+  margin-left: 10px;
+  background-color:rgb(106, 206, 252);
+}
+.img-container img {
   justify-content: center;
   align-items: center;
-  height: 100%; 
+  margin-left: 90px;
 }
 #whatwedo{
   background-image: url("");
