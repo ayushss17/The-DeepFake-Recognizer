@@ -12,7 +12,7 @@
 <body>
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html">DeepScanner</a>
+            <a class="navbar-brand" href="./index.html">DeepScanner</a>
             <div class="collapse navbar-collapse">
             
         </div>
@@ -36,7 +36,7 @@
               <div class="mb-3">
                   <input type="file" class="form-control" id="fileUpload" name="file" accept="image/*" required>
               </div>
-              <button type="submit" class="btn btn-primary" onclick="window.location.href='#result'">Upload and Analyze</button>
+              <button class="btn btn-primary">Upload and Analyze</button>
           </form>
       </div>
     </section>
@@ -55,6 +55,8 @@
             {% elif type[:5] == "image" %}
             <h3 style="font-weight: 700;">Input Frame for Analysis</h3>
           <img src="{{img}}" alt="Uploaded Image">
+          <h3>Accuracy</h3>
+          <h4 style="justify-content: center; display: flex;">{{accuracy}}</h4>
           {% else %}
           <h3 style="font-weight: 800;">Extracted Frames </h3>
           <div class="img-container">
@@ -65,6 +67,7 @@
             <div class="img-container2">
             <img src="data:image/png;base64,{{frames[3]}}" alt="Frame4" >
             <img src="data:image/png;base64,{{frames[4]}}" alt="Frame5" >
+
         </div>
     </div>
 
@@ -104,43 +107,25 @@
         <p class="mb-0">Copyright &copy; 2025 Company Name - Group5 MINI PROJECT</p>
     </footer>
 </div> 
-    <script>
-      document.querySelectorAll('input[name="uploadType"]').forEach((radio) => {
-        radio.addEventListener('change', (e) => {
-          const fileInput = document.getElementById('fileUpload');
-          fileInput.accept = e.target.value === 'video' ? 'video/*' : 'image/*';
-        });
-        document.getElementById('uploadForm').addEventListener('submit',(event)=>{
-      // event.preventDefault()
-      uploadFile()
+<script>
+    document.querySelectorAll('input[name="uploadType"]').forEach((radio) => {
+      radio.addEventListener('change', (e) => {
+        const fileInput = document.getElementById('fileUpload');
+        fileInput.accept = e.target.value === 'video' ? 'video/*' : 'image/*';
       });
     });
-    window.onload = function() {
-        if (performance.navigation.type === 1) {
-            window.location.href = "/image"; // Redirect to clear previous values
-        }
+  
+    // Smooth scroll to results on form submission
+    document.getElementById("uploadForm").addEventListener("submit", function () {
+      document.getElementById("result").scrollIntoView({ behavior: "smooth" });
+    });
+  
+    window.onload = function () {
+      if (performance.navigation.type === 1) {
+        window.location.href = "/image"; // Clear previous values
+      }
     };
-    async function uploadFile(){
-    var file=document.getElementById('fileUpload').files[0]
-    console.log(file)
-    if(!file){
-        alert("Please Include File")
-        return
-    }
-    let formData=new FormData()
-    formData.append("file",file)
-
-    let res=await fetch('http://127.0.0.1:5000/image',{
-        method:"POST",
-        body:formData
-    })
-
-    let result=await res.json()
-    document.getElementById('response').innerText="Result"+result.message;
-    console.log(result.message)
-
-
-}
-    </script>
+  </script>
+  
 </body>
 </html>

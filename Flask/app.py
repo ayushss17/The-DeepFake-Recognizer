@@ -7,16 +7,23 @@ import numpy as np
 import shutil
 from io import BytesIO
 from PIL import Image
+import filecmp
 import base64
 app = Flask(__name__)
+app.secret_key = '1234'
 
 
 
 @app.route('/', methods=['GET', 'POST'])
+
 def home(): 
     return render_template("index.html")
+
+@app.route('/index.html',methods=['GET','POST'])
+def home1():
+    return render_template("index.html")
+
 @app.route('/image',methods=['GET','POST'])
-@app.route('/image#result',methods=['GET','POST'])
 def image():
     accuracy=""
     predict=0
@@ -27,33 +34,40 @@ def image():
         type=request.form.get('uploadType')
         fileType=user_inp.content_type.find('video')
         if "video" in user_inp.content_type:
-            file_exists=False
-            dir="D:/Projects/The DeepFake Recognizer/Flask/static/Images/Data/VDS"
-            finalPath=""
+            file_exists = False
+            dir = "D:/Projects/The DeepFake Recognizer/Flask/static/Images/Data/VDS"
+            finalPath = ""
 
             for paths in os.listdir(dir):
-                subFold=os.path.join(dir,paths)
+                subFold = os.path.join(dir, paths)
                 if os.path.isdir(subFold):
-                    filePath=os.path.join(subFold,user_inp.filename)
+                    filePath = os.path.join(subFold, user_inp.filename)
 
                     if os.path.exists(filePath):
                         print("File already exists")
-                        finalPath=filePath
-                        file_exists=True
+                        finalPath = filePath
+                        file_exists = True
                         break
-            
+                    
             if not file_exists:
-                saveFolder=os.path.join(dir,os.listdir(dir)[0])
-                savePath=os.path.join(saveFolder,user_inp.filename)
+                saveFolder = os.path.join(dir, os.listdir(dir)[0])
+                savePath = os.path.join(saveFolder, user_inp.filename)
                 user_inp.save(savePath)
                 print("File saved")
-                finalPath=savePath
+                finalPath = savePath
 
-            finalPath=os.path.normpath(finalPath)
+            finalPath = os.path.normpath(finalPath)
 
-            predict,label,frames=analyzeVideo(finalPath)
-            filetype=user_inp.content_type.split('/')
-            return render_template('image.html', accuracy=predict,type=user_inp.content_type,frames=frames)
+            predict, label, frames = analyzeVideo(finalPath,user_inp.filename)
+
+            return render_template(
+            'image.html',
+            accuracy=float(predict),
+            img=None,
+            type=user_inp.content_type,
+            frames=frames
+            )
+
 
 
         elif "image" in user_inp.content_type:
@@ -82,14 +96,32 @@ def image():
             
             finalPath = os.path.normpath(finalPath)  # Normalize path
             print(finalPath)
-            predict, label = analyzeImg(finalPath)
+            predict, label = analyzeImg(finalPath,user_inp.filename)
             img_url = f"/static/Images/Data/IMG/{label}/{user_inp.filename}"
-            return render_template('image.html', accuracy=predict, img=img_url,type=user_inp.content_type)
-        print("Fake" if predict > 0.5 else "Real")  
+            session['result'] = {
+            'accuracy': float(predict),
+            'img': img_url,
+            'type': user_inp.content_type,
+            'frames': frames if 'video' in user_inp.content_type else None
+            }
+            return redirect(url_for('image') + '#result')
+
 
         
-    elif request.method=="GET":
-        return render_template('image.html',accuracy=None, img=None)
+    elif request.method == "GET":
+        result = session.pop('result', None)
+        if result:
+            return render_template(
+                'image.html',
+                accuracy=result.get('accuracy'),
+                img=result.get('img'),
+                type=result.get('type'),
+                frames=result.get('frames')
+            )
+        else:
+            return render_template('image.html', accuracy=None, img=None)
+
+
 # def showImg(path):
 #     img=cv.imread(path)
 #     img_rgb=cv.cvtColor(img,cv.COLOR_BGR2RGB)
@@ -133,7 +165,7 @@ def extractFrames(videoPath,frames=30):
     
     return np.array(extractedFrames),np.array(originalFrame)
 
-def frameConversion(frames):
+def frameConversion(frames): #to display for user
     encodedFrames=[]
     for frame in frames:
             frame=cv.cvtColor(frame,cv.COLOR_BGR2RGB)
@@ -148,7 +180,7 @@ def frameConversion(frames):
 
     return encodedFrames
 
-def analyzeVideo(videoPath):
+def analyzeVideo(videoPath,name):
     folder="D:/Projects/The DeepFake Recognizer/Flask/static/Images/Data/VDS"
     model=load_model("D:/Projects/The DeepFake Recognizer/Flask/Model/deepfake_model_video1.keras")
     extFrames,orgFrames=extractFrames(videoPath,frames=30)
@@ -164,42 +196,64 @@ def analyzeVideo(videoPath):
         label="Real"
         print(label)
         print(predict)
-    catPath=os.path.join(folder,label)
-    # shutil.copy(videoPath,catPath)
+    
+    destination_folder = os.path.join(folder, label)
+    destination_path = os.path.join(destination_folder, name)
+    
+    videoPath = os.path.normpath(videoPath)
+    destination_path = os.path.normpath(destination_path)
+    
+    if os.path.exists(videoPath) and os.path.abspath(videoPath) != os.path.abspath(destination_path):
+        try:
+            shutil.move(videoPath, destination_path)
+        except Exception as e:
+            print("Error while moving image:", e)
+    else:
+        print("Image already exists at destination or file is already in correct location.")
     return predict,label,encodedFrames
-def analyzeImg(imgPath):
-    folder="D:/Projects/The DeepFake Recognizer/Flask/static/Images/Data/IMG"
-    #img processing
-    face_casc=cv.CascadeClassifier('D:/Projects/The DeepFake Recognizer/Flask/Model/haars_face.xml')
-    img=cv.imread(imgPath)
-    img=cv.cvtColor(img,cv.COLOR_BGR2RGB)
-    #Detecting Faces -
-    faces=face_casc.detectMultiScale(img,scaleFactor=1.1,minNeighbors=5,minSize=(30,30))
-    if(len(faces)==0):
-        print("No faces are there")
 
-    x,y,w,h=faces[0]
-    img=img[y:y+h,x:x+w]
-    img=cv.resize(img,(64,64))
-    img_arr=img.astype('float32')/255.0
-    img_arr=np.expand_dims(img_arr,axis=0)
+def analyzeImg(videoPath, name):
+    folder = "D:/Projects/The DeepFake Recognizer/Flask/static/Images/Data/IMG"
+    face_casc = cv.CascadeClassifier('D:/Projects/The DeepFake Recognizer/Flask/Model/haars_face.xml')
+    img = cv.imread(videoPath)
+    img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+    
+    faces = face_casc.detectMultiScale(img, scaleFactor=1.1, minNeighbors=5, minSize=(10, 10))
+    
+    if len(faces) == 0:
+        print("No face detected.")
+        return 0, "Failed"
 
-    #model loading and predict
-    model=load_model("D:/Projects/The DeepFake Recognizer/Flask/Model/deepfake_model_updated1.keras")
+    x, y, w, h = faces[0]
+    img = img[y:y+h, x:x+w]
+    img = cv.resize(img, (64, 64))
+    img_arr = img.astype('float32') / 255.0
+    img_arr = np.expand_dims(img_arr, axis=0)
 
-    predict=model.predict(img_arr)
-    if predict>0.5:
-        label="Fake"
-        print(label)
-        print(predict)
-    else:    
-        label="Real"
-        print(label)
-        print(predict)
-    catPath=os.path.join(folder,label)
-    # shutil.copy(imgPath,catPath)
+    model = load_model("D:/Projects/The DeepFake Recognizer/Flask/Model/deepfake_model_updated1.keras")
+    prediction = model.predict(img_arr)
+    
+    label = "Fake" if prediction > 0.5 else "Real"
+    print(f"Prediction: {label} - {prediction}")
 
-    return predict,label
+    destination_folder = os.path.join(folder, label)
+    destination_path = os.path.join(destination_folder, name)
+    
+    videoPath = os.path.normpath(videoPath)
+    destination_path = os.path.normpath(destination_path)
+    
+    if os.path.exists(videoPath) and os.path.abspath(videoPath) != os.path.abspath(destination_path):
+        try:
+            shutil.move(videoPath, destination_path)
+        except Exception as e:
+            print("Error while moving image:", e)
+    else:
+        print("Image already exists at destination or file is already in correct location.")
+
+    return prediction, label
+
+    
+    
 
     
 
