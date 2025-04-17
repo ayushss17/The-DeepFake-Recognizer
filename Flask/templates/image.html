@@ -34,7 +34,7 @@
                   </div>
               </div>
               <div class="mb-3">
-                  <input type="file" class="form-control" id="fileUpload" name="file" accept="image/*" required>
+                  <input type="file" class="form-control" id="fileUpload" name="file" accept="F/*" required>
               </div>
               <button class="btn btn-primary">Upload and Analyze</button>
           </form>
@@ -44,20 +44,24 @@
     <div class="result" style="padding-top: 1px;overflow: hidden;" id="result">
         <div class="resultContainer">
             <div class="imges" style="height: 530px;">
-            {% if not accuracy %}
-            <h3 style="margin-top: 250px; font-size: 35px; font-weight: bolder;">Once you upload an image, the system will process it and display the results here.</h3>
-
-            <div class="indicator" style="margin-top: 50px;">
+            {% if not accuracy %} 
+                {% if err==1 %}
+                <img src="../static/Images/erroLoading.png" style="margin-top: 100px;">
+                <h5 style="margin-top: 100px; margin-left: 450px; font-size: 35px; font-weight: bolder;">{{data}}</h5>
+                {% else %}
+                <h3 style="margin-top: 250px; font-size: 35px; font-weight: bolder;">Once you upload an image, the system will process it and display the results here.</h3>
+                <div class="indicator" style="margin-top: 50px;">
                 <div class="red"></div>
                 <div class="lightYellow yellow"></div>
                 <div class="green"></div>
-            </div>
+                </div>
+                {% endif %}
             {% elif type[:5] == "image" %}
             <h3 style="font-weight: 700;">Input Frame for Analysis</h3>
           <img src="{{img}}" alt="Uploaded Image">
           <h3>Accuracy</h3>
-          <h4 style="justify-content: center; display: flex;">{{accuracy}}</h4>
-          {% else %}
+          <h4 style="justify-content: center; display: flex;">{{accuracy}}</h4>    
+          {% elif err==0 %}            
           <h3 style="font-weight: 800;">Extracted Frames </h3>
           <div class="img-container">
             <img src="data:image/png;base64,{{frames[0]}}" alt="Frame1" style="margin-left: 0;">
@@ -104,7 +108,7 @@
    
     <div class="footer" style="margin-top: 80px;">
     <footer class="text-center tm-footer">
-        <p class="mb-0">Copyright &copy; 2025 Company Name - Group5 MINI PROJECT</p>
+        <p class="mb-0">Copyright &copy; 2025 Group5 MINI PROJECT</p>
     </footer>
 </div> 
 <script>

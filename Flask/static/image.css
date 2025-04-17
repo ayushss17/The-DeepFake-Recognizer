@@ -11,11 +11,11 @@
   src: url(./static/Fonts/Montserrat/Montserrat-Bold.otf);
 }
 #upload{
-  background-image: url("./Images/ChatGPT\ Image\ Mar\ 30\,\ 2025\,\ 11_54_02\ AM.png");
+  background-image: url("./Images/Untitled_design__2_-removebg-preview.png");
   background-color:#91CEED;
-
-  background-size: contain;
-  background-position: right center;
+  background-position: center;
+  background-position-x: 950px;
+  background-position-y: 50px ;
   background-repeat: no-repeat;
   
   height: 100vh;
@@ -101,7 +101,7 @@ display: block;
 }
 
 .navbar a {
-  color:  skyblue;
+  color:  #87ceeb;
   font-weight: bold;
   font-size: 30px;
 }
