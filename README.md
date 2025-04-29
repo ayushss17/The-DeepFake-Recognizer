@@ -1,1 +1,1 @@
-A Real and Fake Visual Media Classifier
+						       A Real and Fake Visual Media Classifier.
